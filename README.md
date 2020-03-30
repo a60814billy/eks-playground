@@ -26,3 +26,7 @@ The `clean.sh` script is used clean AWS resources and terraform state. If you do
 ```bash
 ./clean.sh force
 ```
+
+## Credit
+
+A part of EKS terraform configurations are inspired by [getamis/vishwakarma](https://github.com/getamis/vishwakarma).
