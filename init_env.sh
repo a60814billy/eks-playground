@@ -3,9 +3,12 @@
 set -euo pipefail
 set -x
 
+DEFAULT_ACCESS_KEY=""
+DEFAULT_SECRET_KEY=""
+
 region="us-east-1"
-access_key=${AWS_ACCESS_KEY}
-access_secret=${AWS_SECRET_KEY}
+access_key="${AWS_ACCESS_KEY:=$DEFAULT_ACCESS_KEY}"
+access_secret="${AWS_SECRET_KEY:=$DEFAULT_SECRET_KEY}"
 
 cat > ~/.aws/config <<EOL
 [default]
@@ -19,7 +22,7 @@ aws_secret_access_key = ${access_secret}
 EOL
 
 sed -i "" -E "s/aws_access_key = \".*\"/aws_access_key = \"${access_key}\"/g" ./terraform.tfvars
-sed -i "" -E "s/aws_secret_key = \".*\"/aws_secret_key = \"${access_secret}\"/g" ./terraform.tfvars
+sed -i "" -E "s~aws_secret_key = \".*\"~aws_secret_key = \"${access_secret}\"~g" ./terraform.tfvars
 
 terraform init
 
